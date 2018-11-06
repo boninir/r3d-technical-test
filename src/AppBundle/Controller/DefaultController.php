@@ -21,12 +21,20 @@ class DefaultController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Product $product */
+            $product = $form->getData();
+            $email = $form->get('email')->getData();
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($product);
             $entityManager->flush();
 
-            $this->sendEmail('raphael.eros.bonini@gmail.com', $product);
+            $this->sendEmail($email, $product);
+
+            $request->getSession()
+                ->getFlashBag()
+                ->add('success', 'Votre produit à bien été enregistré, un mail récapitulatif vous a été envoyé.')
+            ;
 
             return $this->redirect($this->generateUrl('homepage'));
 
@@ -43,9 +51,20 @@ class DefaultController extends Controller
         $message = (new Swift_Message('New Product Created'))
             ->setFrom('no-reply@example.com')
             ->setTo($email)
-            ->setBody(\sprintf('the product %s was correctly created.', $product->getName()))
+            ->setBody(
+                $this->renderView(
+                    'emails/product.html.twig',
+                    array('product' => $product)
+                ),
+                'text/html'
+            )
         ;
 
-        $this->get('mailer')->send($message);
+        try {
+            $this->get('mailer')->send($message);
+        } catch (\Exception $e) {
+            throw new \Swift_SwiftException(\sprintf('An error occurred during sending mail : %s', $e->getMessage()));
+        }
+
     }
 }

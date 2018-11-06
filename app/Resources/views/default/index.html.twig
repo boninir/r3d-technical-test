@@ -10,6 +10,19 @@
     </div>
 
     <div class="container">
+        {% if app.session.flashBag.has('success') %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {% for msg in app.session.flashBag.get('success') %}
+                    {{ msg }}
+                {% endfor %}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="container">
         {{ form_start(form) }}
 
         <div class="form-group">

@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -21,6 +22,7 @@ class ProductType extends AbstractType
             ->add('name', TextType::class, array('label' => 'Nom : ', 'attr' => array('class' => 'form-control')))
             ->add('description', TextareaType::class, array('label' => 'Description : ', 'attr' => array('class' => 'form-control')))
             ->add('price', IntegerType::class, array('label' => 'Prix : ', 'attr' => array('class' => 'form-control')))
+            ->add('email', EmailType::class,  array('label' => 'Adresse email :', 'mapped' => false, 'attr' => array('class' => 'form-control')))
             ->add('save', SubmitType::class, array('label' => 'Ajouter un produit', 'attr' => array('class' => 'btn btn-primary')));
     }
     
