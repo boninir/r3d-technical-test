@@ -1,9 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {{ form_start(form) }}
-    {{ form_widget(form.name) }}
-    {{ form_widget(form.description) }}
-    {{ form_widget(form.price) }}
-    {{ form_end(form) }}
+    <div class="container">
+        <div class="jumbotron">
+            <h1>R3D Technical Test</h1>
+            <p class="lead">Remplissez le formulaire afin d'ajouter un article (un résumé vous sera ensuite envoyé par mail).</p>
+            <p>
+        </div>
+    </div>
+
+    <div class="container">
+        {{ form_start(form) }}
+
+        <div class="form-group">
+            {{ form_widget(form) }}
+        </div>
+
+        {{ form_end(form) }}
+    </div>
 {% endblock %}
